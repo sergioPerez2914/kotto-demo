@@ -1,0 +1,808 @@
+<!-- kotto — landing page. Concepto en etapa de diseño; sin dinero real. -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kotto — el pulso de tus cobros en Venezuela</title>
+<meta name="description" content="Infraestructura de cobro recurrente para Venezuela. Precio en dólares, liquidación en bolívares, conciliación automática. Embebida en tu app, no otra app más.">
+
+<!-- Vista previa al compartir el link. Cambia og:url por tu dominio real al desplegar. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="kotto">
+<meta property="og:title" content="kotto — el pulso de tus cobros en Venezuela">
+<meta property="og:description" content="Cobra mensualidades sin perseguir a nadie. Precio en dólares, liquidación en bolívares, conciliación automática.">
+<meta property="og:url" content="https://kotto.pages.dev/">
+<meta property="og:locale" content="es_VE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="kotto — el pulso de tus cobros en Venezuela">
+<meta name="twitter:description" content="Cobra mensualidades sin perseguir a nadie. Infraestructura de cobro recurrente para Venezuela.">
+<meta name="theme-color" content="#1B2430"><link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2430; --ink-2:#243040; --paper:#F4F7FB; --card:#FFFFFF;
+    --brand:#A7C7E7; --brand-deep:#5B8BBF; --brand-soft:#E3EEF9; --brand-ghost:#EDF3FA;
+    --jade:#12876A; --jade-soft:#DCEFE8;
+    --muted:#66707E; --line:#DFE6EF; --line-dark:#33405480;
+    --display:"Space Grotesk","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --shadow-sm:0 1px 2px rgba(22,30,41,.04), 0 8px 24px -16px rgba(22,30,41,.14);
+    --shadow-md:0 2px 4px rgba(22,30,41,.05), 0 18px 38px -20px rgba(22,30,41,.2);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  section[id]{scroll-margin-top:84px}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);
+    line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+  a{color:var(--brand-deep)}
+  h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.03em;line-height:1.1}
+  .mono,.num,.kpi .v,.damount,.dbs,.eyebrow{font-variant-numeric:tabular-nums}
+  .eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--brand-deep);margin:0 0 14px}
+  .btn{display:inline-block;border:0;border-radius:12px;cursor:pointer;text-decoration:none;
+    font-family:var(--display);font-weight:700;font-size:15px;padding:13px 22px;
+    transition:transform .18s ease, box-shadow .18s ease, filter .18s ease}
+  .btn.primary{background:var(--brand);color:var(--ink);box-shadow:0 10px 22px -12px rgba(91,139,191,.75)}
+  .btn.primary:hover{filter:brightness(1.04);transform:translateY(-1px);
+    box-shadow:0 14px 28px -12px rgba(91,139,191,.85)}
+  .btn.dark:hover{transform:translateY(-1px)}
+  .btn.dark{background:var(--ink);color:#fff}
+  .btn.ghost{background:none;color:var(--brand-deep);padding:13px 10px}
+  .btn:focus-visible,a:focus-visible{outline:2px solid var(--brand-deep);outline-offset:2px}
+
+  /* ---------- nav ---------- */
+  nav{position:sticky;top:0;z-index:20;background:rgba(245,248,252,.82);
+    backdrop-filter:blur(14px) saturate(1.6);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:13px;padding-bottom:13px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+  .brand .name{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.03em}
+  .navlinks{display:flex;gap:22px;align-items:center}
+  .navlinks a{font-size:13.5px;font-weight:600;text-decoration:none;color:var(--muted);transition:color .15s ease}
+  .navlinks a:hover{color:var(--ink)}
+  .navlinks .btn{padding:9px 16px;font-size:13.5px}
+  @media(max-width:720px){.navlinks a.hidesm{display:none}}
+  .badge{font-family:var(--mono);font-size:10.5px;color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;padding:3px 9px;white-space:nowrap}
+
+  /* ---------- hero ---------- */
+  header{position:relative;padding:92px 0 44px;overflow:hidden}
+  header::before{content:"";position:absolute;top:-260px;right:-140px;width:680px;height:680px;
+    background:radial-gradient(circle,rgba(167,199,231,.45) 0%,rgba(167,199,231,0) 68%);
+    pointer-events:none;z-index:0}
+  header .wrap{position:relative;z-index:1}
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  @media(max-width:860px){.hero{grid-template-columns:1fr}}
+  .hero h1{font-size:clamp(35px,5.4vw,57px);font-weight:700;margin:0 0 18px}
+  .hero h1 em{font-style:normal;color:var(--brand-deep)}
+  .hero p.sub{font-size:17.5px;color:var(--muted);max-width:50ch;margin:0 0 28px;line-height:1.55}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .heronote{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:16px}
+
+  /* hero visual: teléfono minimal + latido */
+  .heroviz{position:relative;display:flex;justify-content:center}
+  .miniphone{width:270px;background:var(--ink);border-radius:34px;padding:10px;
+    box-shadow:0 30px 60px -28px rgba(27,36,48,.5)}
+  .miniscreen{background:var(--card);border-radius:25px;padding:20px 18px;min-height:340px;
+    display:flex;flex-direction:column;gap:12px}
+  .mini-app{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+  .mini-app b{color:var(--ink)}
+  .mini-amount{font-family:var(--mono);font-weight:700;font-size:30px}
+  .mini-amount span{color:var(--brand-deep)}
+  .mini-bs{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .mini-line{height:1px;background:var(--line);margin:4px 0}
+  .mini-ok{margin-top:auto;background:var(--jade-soft);color:var(--jade);border-radius:11px;
+    padding:11px 12px;font-size:12.5px;font-weight:700;display:flex;gap:8px;align-items:center}
+  .mini-btn{background:var(--brand);color:var(--ink);border-radius:11px;text-align:center;
+    padding:12px;font-weight:800;font-size:14px}
+  .ekgband{position:absolute;left:-40px;right:-40px;bottom:-6px;pointer-events:none;opacity:.9}
+
+  /* ---------- demo interactiva: teléfono tocable + modal ---------- */
+  .phonebtn{position:relative;border:0;background:none;padding:0;cursor:pointer;border-radius:38px;
+    transition:transform .22s ease}
+  .phonebtn:hover{transform:translateY(-4px) scale(1.02)}
+  .phonebtn:focus-visible{outline:3px solid var(--brand-deep);outline-offset:6px}
+  .tryhint{position:absolute;left:50%;transform:translateX(-50%);bottom:-18px;z-index:2;
+    background:var(--ink);color:#fff;font-weight:800;font-size:13px;border-radius:999px;
+    padding:9px 18px;display:flex;align-items:center;gap:8px;white-space:nowrap;
+    box-shadow:0 10px 24px -10px rgba(27,36,48,.55)}
+  .tryhint .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);flex:0 0 auto;
+    animation:blink 1.6s ease infinite}
+  @keyframes blink{0%,100%{opacity:.35}50%{opacity:1}}
+
+  .dmodal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;
+    padding:20px}
+  .dmodal.on{display:flex}
+  .dmodal .backdrop{position:absolute;inset:0;background:rgba(27,36,48,.66);backdrop-filter:blur(6px)}
+  .dstage{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;
+    animation:pop .28s ease}
+  @keyframes pop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+  .dphone{width:min(360px,92vw);background:var(--ink);border-radius:44px;padding:13px;
+    box-shadow:0 40px 90px -30px rgba(0,0,0,.65)}
+  .dscreen{background:var(--card);border-radius:32px;overflow:hidden;min-height:560px;max-height:88vh;
+    display:flex;flex-direction:column}
+  .dappbar{padding:16px 18px 12px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between}
+  .dappbar .app{font-weight:800;font-size:14px}
+  .dappbar .powered{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .dscr{padding:18px;flex:1;display:flex;flex-direction:column;overflow-y:auto}
+  .dscr h3{margin:0 0 2px;font-size:14.5px}
+  .dscr .sub{color:var(--muted);font-size:12px;margin:0 0 10px}
+  .damount{font-family:var(--mono);font-weight:700;font-size:32px;line-height:1}
+  .damount span{color:var(--brand-deep)}
+  .dbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:4px}
+  .drate{font-family:var(--mono);font-size:10px;color:var(--muted);margin:2px 0 4px}
+  .dscr label.fld{display:block;font-size:10.5px;font-weight:600;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.06em;margin:10px 0 5px}
+  .dscr select,.dscr input.txt{width:100%;font-family:var(--font);font-size:13.5px;
+    padding:9px 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}
+  .dscr input.txt{font-family:var(--mono);letter-spacing:.35em}
+  .dbtn{appearance:none;border:0;border-radius:12px;cursor:pointer;width:100%;
+    font-weight:700;font-size:14.5px;padding:12px;margin-top:14px;font-family:var(--display)}
+  .dbtn.primary{background:var(--brand);color:var(--ink)}
+  .dbtn.primary:hover{filter:brightness(1.04)}
+  .dbtn.ghostb{background:none;color:var(--brand-deep);margin-top:12px;padding:8px}
+  .dhint{font-size:11.5px;color:var(--muted);text-align:center;margin:12px 2px 0;line-height:1.4}
+  .plantoggle{display:flex;background:var(--paper);border:1px solid var(--line);border-radius:11px;
+    padding:3px;gap:3px;margin-bottom:10px}
+  .planopt{flex:1;appearance:none;border:0;background:none;cursor:pointer;border-radius:8px;
+    padding:7px 8px;font-family:var(--font);font-size:12px;font-weight:700;color:var(--muted);
+    display:flex;flex-direction:column;align-items:center;gap:1px;transition:.15s}
+  .planopt[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 2px 8px -3px rgba(27,36,48,.25)}
+  .planopt .save{font-family:var(--mono);font-size:9.5px;font-weight:700;color:var(--jade);
+    background:var(--jade-soft);border-radius:999px;padding:1px 7px}
+  .planopt:focus-visible{outline:2px solid var(--brand-deep);outline-offset:2px}
+  .dcenter{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;gap:14px}
+  .dspin{width:44px;height:44px;border:3px solid var(--line);border-top-color:var(--brand-deep);
+    border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .dtick{width:60px;height:60px;border-radius:50%;background:var(--jade-soft);
+    display:flex;align-items:center;justify-content:center}
+  .dtick svg{width:32px;height:32px}
+  .dok{font-weight:800;font-size:18px}
+  .dreceipt{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--paper);
+    border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;text-align:left;line-height:1.7}
+  .dreceipt b{color:var(--ink)}
+  .dnotify{font-size:12px;color:var(--jade);font-weight:700}
+  .dclose{appearance:none;border:1px solid rgba(255,255,255,.35);background:rgba(27,36,48,.5);
+    color:#fff;font-family:var(--font);font-weight:700;font-size:13px;border-radius:999px;
+    padding:9px 18px;cursor:pointer}
+  .dclose:hover{background:rgba(27,36,48,.8)}
+  .dcap{font-family:var(--mono);font-size:11px;color:#DCE4EF;text-align:center}
+
+  /* ---------- tu empresa: antes / después ---------- */
+  .bawrap{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--card)}
+  .bahead{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:0}
+  @media(max-width:700px){.bahead{grid-template-columns:1.3fr 1fr 1fr}}
+  .bahead > div{padding:16px 18px;font-family:var(--mono);font-size:10.5px;font-weight:600;
+    text-transform:uppercase;letter-spacing:.07em}
+  .bahead .lbl{color:var(--muted)}
+  .bahead .before{color:var(--brand-deep);background:var(--brand-ghost)}
+  .bahead .after{color:var(--jade);background:var(--jade-soft)}
+  .barow{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:0;border-top:1px solid var(--line)}
+  .barow > div{padding:16px 18px;font-size:13.5px}
+  .barow .lbl{font-weight:700;color:var(--ink);display:flex;align-items:center}
+  .barow .before{color:var(--muted);background:rgba(167,199,231,.06)}
+  .barow .after{color:var(--ink);background:rgba(18,135,106,.05);font-weight:600}
+  @media(max-width:700px){
+    .bahead{display:none}
+    .barow{grid-template-columns:1fr;border-top:1px solid var(--line);padding:14px 0}
+    .barow > div{padding:4px 18px}
+    .barow .lbl{font-family:var(--mono);font-size:10.5px;text-transform:uppercase;
+      letter-spacing:.05em;color:var(--muted);font-weight:700}
+    .barow .before::before{content:"Antes — ";color:var(--brand-deep);font-weight:700}
+    .barow .after::before{content:"Con kotto — ";color:var(--jade);font-weight:700}
+  }
+
+  /* ---------- dashboard empresarial ---------- */
+  .dashwrap{background:var(--card);border:1px solid var(--line);border-radius:20px;
+    padding:26px 26px 8px;box-shadow:0 24px 60px -34px rgba(27,36,48,.28)}
+  .dashtop{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;
+    gap:12px;margin-bottom:18px}
+  .dashtop .who{font-weight:800;font-size:15px}
+  .dashtop .when{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:2px}
+  .livepill{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--jade);
+    background:var(--jade-soft);border-radius:999px;padding:4px 10px;display:flex;align-items:center;gap:6px}
+  .livepill .dot2{width:6px;height:6px;border-radius:50%;background:var(--jade);animation:blink 1.6s ease infinite}
+  .kpis4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+  @media(max-width:760px){.kpis4{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 17px}
+  .kpi .k{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .kpi .v{font-family:var(--mono);font-weight:700;font-size:23px;letter-spacing:-.02em;margin-top:7px}
+  .kpi .d{font-size:11px;color:var(--jade);font-weight:700;margin-top:4px}
+  .dashtable{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin-bottom:18px}
+  .dashtable table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:600px}
+  .dashtable th,.dashtable td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
+  .dashtable th{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+    font-weight:600;background:var(--paper)}
+  .dashtable tr:last-child td{border-bottom:0}
+  .dashtable td.mono,.dashtable .num{font-family:var(--mono)}
+  .dashtable .num{text-align:right}
+  .dpill{font-family:var(--mono);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;display:inline-block}
+  .dpill.ok{background:var(--jade-soft);color:var(--jade)}
+  .dpill.rev{background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+  .dashfoot{color:var(--muted);font-size:11.5px;text-align:center;font-family:var(--mono);padding:14px 0 22px}
+
+  /* ---------- sections ---------- */
+  section{padding:78px 0}
+  section.alt{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(25px,3.5vw,34px);margin:0 0 12px}
+  .sectionlead{color:var(--muted);font-size:15.5px;max-width:60ch;margin:0 0 36px;line-height:1.6}
+
+  /* problema */
+  .pushpull{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.pushpull{grid-template-columns:1fr}}
+  .pp{border:1px solid var(--line);border-radius:16px;padding:24px;background:var(--card);
+    box-shadow:var(--shadow-sm)}
+  .pp.hurt{background:var(--brand-ghost)}
+  .pp h3{margin:0 0 8px;font-size:16px}
+  .pp p{margin:0;font-size:14px;color:var(--muted)}
+  .pp .tag{font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;margin-bottom:10px;display:inline-block;border-radius:999px;padding:3px 10px}
+  .pp.hurt .tag{background:#fff;color:var(--brand-deep)}
+  .pp.fix .tag{background:var(--jade-soft);color:var(--jade)}
+  .ppfacts{margin:14px 0 0;padding:0;list-style:none;font-size:13.5px;color:var(--ink)}
+  .ppfacts li{display:flex;gap:9px;margin-top:8px}
+  .ppfacts .x{color:var(--brand-deep);font-weight:800;flex:0 0 auto}
+  .pp.fix .ppfacts .x{color:var(--jade)}
+
+  /* cómo funciona */
+  .steps3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;counter-reset:paso}
+  @media(max-width:760px){.steps3{grid-template-columns:1fr}}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;
+    position:relative;box-shadow:var(--shadow-sm);transition:transform .2s ease, box-shadow .2s ease}
+  .step:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+  .step::before{counter-increment:paso;content:counter(paso,decimal-leading-zero);
+    font-family:var(--mono);font-weight:500;font-size:11.5px;color:var(--brand-deep);
+    background:var(--brand-soft);border-radius:8px;padding:5px 9px;display:inline-block;margin-bottom:14px}
+  .step h3{margin:0 0 8px;font-size:15.5px}
+  .step p{margin:0;font-size:13.5px;color:var(--muted)}
+  .flipnote{margin-top:20px;background:var(--ink);color:#fff;border-radius:16px;padding:20px 24px;
+    display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .flipnote .fl{font-family:var(--mono);font-size:10.5px;color:var(--brand);font-weight:500;
+    letter-spacing:.09em;text-transform:uppercase;flex:0 0 auto}
+  .flipnote p{margin:0;font-size:14px;color:#D8DFE9;max-width:64ch}
+  .flipnote b{color:#fff}
+
+  /* producto: capa + superficies */
+  .prodgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:760px){.prodgrid{grid-template-columns:1fr}}
+  .prod{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px;
+    box-shadow:var(--shadow-sm);transition:transform .2s ease, box-shadow .2s ease}
+  .prod:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+  .prod h3{margin:0 0 8px;font-size:15.5px;display:flex;align-items:center;gap:10px}
+  .prod p{margin:0;font-size:13.5px;color:var(--muted)}
+  .prod .ic{width:34px;height:34px;border-radius:10px;background:var(--brand-soft);
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .prod .ic svg{width:18px;height:18px;stroke:var(--brand-deep)}
+
+  /* developers strip */
+  .devstrip{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center}
+  @media(max-width:860px){.devstrip{grid-template-columns:1fr}}
+  .code{background:var(--ink);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-md)}
+  .code .ch{padding:10px 16px;border-bottom:1px solid var(--line-dark);
+    font-family:var(--mono);font-size:11px;color:#A8B2C1}
+  pre{margin:0;padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:12px;
+    line-height:1.75;color:#DDE5EF}
+  .tk{color:var(--brand)} .ts{color:#9ED0A6} .tc{color:#7C8899} .tm{color:#E7C988}
+  .devlist{list-style:none;margin:18px 0 0;padding:0;font-size:14px}
+  .devlist li{display:flex;gap:10px;margin-top:10px}
+  .devlist .ok{color:var(--jade);font-weight:800;flex:0 0 auto}
+
+  /* visión */
+  .acts{display:flex;flex-direction:column;gap:0;position:relative;margin-top:8px}
+  .act{display:grid;grid-template-columns:120px 1fr;gap:22px;padding:22px 0;border-top:1px solid var(--line)}
+  .act:last-child{border-bottom:1px solid var(--line)}
+  @media(max-width:640px){.act{grid-template-columns:1fr;gap:8px}}
+  .act .when{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--brand-deep);padding-top:4px}
+  .act h3{margin:0 0 6px;font-size:16.5px}
+  .act p{margin:0;font-size:14px;color:var(--muted);max-width:66ch}
+  .northstar{margin-top:36px;background:linear-gradient(140deg,var(--brand-soft) 0%,var(--brand-ghost) 100%);
+    border:1px solid rgba(167,199,231,.55);border-radius:18px;padding:28px 30px;
+    box-shadow:var(--shadow-sm)}
+  .northstar p{margin:0;font-size:16.5px;max-width:62ch}
+  .northstar b{color:var(--brand-deep)}
+  .northstar .cap{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.11em;
+    text-transform:uppercase;color:var(--brand-deep);margin-bottom:12px}
+
+  /* aliados */
+  .allies{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.allies{grid-template-columns:1fr}}
+  .ally{border:1px solid var(--line);border-radius:16px;padding:24px;background:var(--card);
+    box-shadow:var(--shadow-sm)}
+  .ally h3{margin:0 0 8px;font-size:15.5px}
+  .ally p{margin:0;font-size:13.5px;color:var(--muted)}
+  .pricingline{margin-top:20px;text-align:center;font-size:15px}
+  .pricingline b{color:var(--brand-deep)}
+
+  /* cta final */
+  .final{background:linear-gradient(160deg,#222E3D 0%,var(--ink) 60%);color:#fff;
+    border-radius:24px;padding:54px 34px;text-align:center;position:relative;overflow:hidden;
+    box-shadow:0 30px 70px -34px rgba(22,30,41,.6)}
+  .final::before{content:"";position:absolute;top:-160px;left:50%;transform:translateX(-50%);
+    width:520px;height:320px;background:radial-gradient(ellipse,rgba(167,199,231,.28) 0%,rgba(167,199,231,0) 70%);
+    pointer-events:none}
+  .final > *{position:relative}
+  .final h2{color:#fff;margin-bottom:10px}
+  .final p{color:#BCC5D1;max-width:56ch;margin:0 auto 26px;font-size:15.5px;line-height:1.6}
+  .final .cta{justify-content:center}
+
+  footer{padding:34px 0 44px;color:var(--muted);font-size:12.5px}
+  footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+  footer .fbrand{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--ink)}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="kotto, inicio">
+      <svg id="logo" width="40" height="26" viewBox="0 0 92 40" fill="none" aria-hidden="true">
+        <path d="M0 20 H26 L33 20 L40 8 L48 33 L56 14 L62 20 H92" stroke="#A7C7E7" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="name">kotto</span>
+    </a>
+    <div class="navlinks">
+      <a class="hidesm" href="#producto">Producto</a>
+      <a class="hidesm" href="#dashboard">Dashboard</a>
+      <a class="hidesm" href="#developers">Desarrolladores</a>
+      <a class="hidesm" href="#vision">Visión</a>
+      <a class="btn primary" href="#contacto">Sé design partner</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap hero">
+    <div>
+      <p class="eyebrow">Infraestructura de cobros · Venezuela</p>
+      <h1>Cobra mensualidades sin perseguir <em>a nadie</em></h1>
+      <p class="sub">kotto es la capa de cobro recurrente que le falta al país: precio en dólares, liquidación en bolívares, conciliación automática. Embebida en tu app — no otra app más.</p>
+      <div class="cta">
+        <a class="btn dark" href="#contacto">Quiero cobrar con kotto</a>
+        <a class="btn ghost" href="#como">Cómo funciona →</a>
+      </div>
+      <p class="heronote">concepto en etapa de diseño · demo sin dinero real</p>
+    </div>
+    <div class="heroviz">
+      <button class="phonebtn" onclick="openDemo()" aria-label="Abrir la demo interactiva de pago">
+      <span class="tryhint"><span class="dot"></span>Toca el teléfono · demo en vivo</span>
+      <div class="miniphone" aria-hidden="true">
+        <div class="miniscreen">
+          <div class="mini-app"><b>Tu app</b><span>vía kotto</span></div>
+          <div>
+            <div class="mini-amount"><span>$4,99</span> /mes</div>
+            <div class="mini-bs">≈ Bs. 623,75 · tasa BCV</div>
+          </div>
+          <div class="mini-line"></div>
+          <div class="mini-btn">Confirmar pago</div>
+          <div class="mini-ok" id="miniok">✓ Pago conciliado · premium activo</div>
+        </div>
+      </div>
+      </button>
+      <svg class="ekgband" height="60" viewBox="0 0 600 60" preserveAspectRatio="none" aria-hidden="true">
+        <path id="heroekg" d="M0 30 H600" stroke="#A7C7E7" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section class="alt" id="problema">
+  <div class="wrap">
+    <p class="eyebrow">El problema</p>
+    <h2>Venezuela cobra en <em style="font-style:normal;color:var(--brand-deep)">push</em>. Las suscripciones viven en <em style="font-style:normal;color:var(--brand-deep)">pull</em>.</h2>
+    <p class="sectionlead">Pago Móvil, Zelle y USDT exigen que el cliente inicie el pago cada vez. Por eso cobrar una mensualidad es perseguir capturas, cruzar referencias a mano y perder suscriptores por pura fricción — no por falta de intención de pago.</p>
+    <div class="pushpull">
+      <div class="pp hurt">
+        <span class="tag">Hoy · mundo push</span>
+        <h3>Cada mes, desde cero</h3>
+        <p>El cliente inicia el pago, manda la captura, y alguien del negocio la revisa a mano.</p>
+        <ul class="ppfacts">
+          <li><span class="x">✕</span>Horas revisando capturas y referencias</li>
+          <li><span class="x">✕</span>Pagos perdidos, duplicados o sin conciliar</li>
+          <li><span class="x">✕</span>La retención se cae por fricción de re-pago</li>
+          <li><span class="x">✕</span>Stripe no liquida a cuentas venezolanas</li>
+        </ul>
+      </div>
+      <div class="pp fix">
+        <span class="tag">Con kotto</span>
+        <h3>Un toque — y camino a cero</h3>
+        <p>kotto convierte el push en pseudo-pull: cobra, reintenta y concilia por ti.</p>
+        <ul class="ppfacts">
+          <li><span class="x">✓</span>Cobro de un toque con clave C2P, desde cualquier banco</li>
+          <li><span class="x">✓</span>Reintentos inteligentes que recuperan morosos</li>
+          <li><span class="x">✓</span>Conciliación automática contra cada suscripción</li>
+          <li><span class="x">✓</span>Precio en dólares, liquidación legal en bolívares</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="antesdespues">
+  <div class="wrap">
+    <p class="eyebrow">Tu empresa</p>
+    <h2>Así cambia tu operación con kotto</h2>
+    <p class="sectionlead">No es solo el checkout del cliente. Es todo lo que tu equipo deja de hacer a mano.</p>
+    <div class="bawrap">
+      <div class="bahead">
+        <div class="lbl"></div>
+        <div class="before">Antes</div>
+        <div class="after">Con kotto</div>
+      </div>
+      <div class="barow">
+        <div class="lbl">Cobrar la mensualidad</div>
+        <div class="before">El cliente inicia el pago cada vez; tu equipo revisa capturas y cruza referencias a mano.</div>
+        <div class="after">Cobro de un toque con clave C2P — y camino a cero toques con débito automático.</div>
+      </div>
+      <div class="barow">
+        <div class="lbl">Activar un plan premium</div>
+        <div class="before">La domiciliación tradicional exige imprimir un formulario, llenarlo a mano y llevarlo a una agencia bancaria con fotocopia de cédula. Casi nadie termina ese trámite solo por probar un plan pago.</div>
+        <div class="after">El cliente confirma con su clave desde su teléfono. El premium se activa en el mismo momento, sin salir de tu app.</div>
+      </div>
+      <div class="barow">
+        <div class="lbl">Activar un plan premium</div>
+        <div class="before">Para domiciliar el pago, el cliente sale de tu app a tramitar un mandato en su banco —a menudo atado a tarjeta de crédito—, un paso extra que hoy hace que muchos abandonen ahí mismo.</div>
+        <div class="after">El cliente confirma dentro de tu propia app, sin trámite bancario aparte ni depender de que tenga tarjeta.</div>
+      </div>
+      <div class="barow">
+        <div class="lbl">Visibilidad de ingresos</div>
+        <div class="before">Una hoja de cálculo por banco, actualizada cuando alguien tiene tiempo.</div>
+        <div class="after">Un dashboard único: MRR, morosidad y recuperación, en vivo.</div>
+      </div>
+      <div class="barow">
+        <div class="lbl">Alcance de bancos</div>
+        <div class="before">Tu domiciliación solo sirve para clientes de un banco puntual.</div>
+        <div class="after">Cobras desde cualquier banco venezolano, sin pedirle nada especial al cliente.</div>
+      </div>
+      <div class="barow">
+        <div class="lbl">Precio en dólares</div>
+        <div class="before">Stripe no liquida a cuentas venezolanas; montar una LLC no es para todos.</div>
+        <div class="after">Precio en dólares, liquidación legal en bolívares a tasa BCV, sin salir del país.</div>
+      </div>
+      <div class="barow">
+        <div class="lbl">Clientes morosos</div>
+        <div class="before">Perseguir por WhatsApp uno por uno, cuando alguien se acuerda.</div>
+        <div class="after">Reintentos y recordatorios automáticos que recuperan el pago solos.</div>
+      </div>
+      <div class="barow">
+        <div class="lbl">Integración</div>
+        <div class="before">Construir tu propia conciliación te come semanas de roadmap.</div>
+        <div class="after">Payment link el primer día; API y SDK cuando quieras profundizar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="como">
+  <div class="wrap">
+    <p class="eyebrow">Cómo funciona</p>
+    <h2>Tres pasos, cero capturas</h2>
+    <p class="sectionlead">Tu producto pide el cobro; tu cliente confirma con la clave de su banco; tu servidor recibe el aviso y desbloquea. Nadie revisa nada.</p>
+    <div class="steps3">
+      <div class="step">
+        <h3>Pides el cobro</h3>
+        <p>Una llamada a la API. kotto congela la tasa BCV del día, calcula los bolívares y genera una referencia única.</p>
+      </div>
+      <div class="step">
+        <h3>Tu cliente confirma</h3>
+        <p>Recibe el pago pre-llenado en su canal (push, WhatsApp, tu app) y confirma con su clave C2P. El único toque.</p>
+      </div>
+      <div class="step">
+        <h3>Se concilia solo</h3>
+        <p>kotto cruza el pago contra la suscripción y dispara un webhook firmado. Tu servidor activa el acceso en segundos.</p>
+      </div>
+    </div>
+    <div class="flipnote">
+      <span class="fl">El flip</span>
+      <p>Donde el banco permita débito pre-autorizado, el paso 2 <b>desaparece</b>: la renovación se vuelve cero toques. Y tu integración no cambia una línea — la API ya tiene forma de pull.</p>
+    </div>
+  </div>
+</section>
+
+<section id="producto">
+  <div class="wrap">
+    <p class="eyebrow">El producto</p>
+    <h2>Infraestructura que se embebe, no se descarga</h2>
+    <p class="sectionlead">kotto nunca es un destino: son piezas que incrustas en tu propia superficie, con tu marca. Y debajo de la recurrencia hay algo más fundamental: <b>el pago conciliado</b> — individual o recurrente, C2B o B2B — y el panel donde lo ves.</p>
+    <div class="prodgrid">
+      <div class="prod">
+        <h3><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 007.5.5l3-3a5 5 0 00-7-7l-1.7 1.7M14 11a5 5 0 00-7.5-.5l-3 3a5 5 0 007 7l1.7-1.7"/></svg></span>Payment links y QR</h3>
+        <p>Cero código: genera un link o QR de cobro y compártelo por WhatsApp o correo. Ideal para arrancar hoy y para recordatorios de cobranza.</p>
+      </div>
+      <div class="prod">
+        <h3><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></span>Elements y SDK</h3>
+        <p>Componentes pre-construidos que viven dentro de tu web o tu app iOS/Android. Lo sensible ocurre en nuestro iframe: tú nunca tocas datos de pago.</p>
+      </div>
+      <div class="prod">
+        <h3><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 5l-2 14"/></svg></span>API + webhooks</h3>
+        <p>Una sola API que esconde la fragmentación banco por banco, y webhooks firmados que avisan en tiempo real si el cobro entró o falló.</p>
+      </div>
+      <div class="prod">
+        <h3><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M4 19V5M4 15l4-4 4 3 4-6 4 4"/></svg></span>Dashboard de cobros</h3>
+        <p>Un panel único que reconcilia lo que entra por todos los bancos, en bolívares y dólares: MRR, morosidad, recuperación. Tus ingresos, por fin visibles.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="dashboard">
+  <div class="wrap">
+    <p class="eyebrow">El dashboard empresarial</p>
+    <h2>Todos tus cobros, en un solo panel</h2>
+    <p class="sectionlead">Tus clientes pagan desde bancos distintos, en bolívares y en dólares. kotto lo reconcilia todo automáticamente y te lo muestra así — sin capturas, sin hojas de cálculo.</p>
+
+    <div class="dashwrap">
+      <div class="dashtop">
+        <div>
+          <div class="who">Órbita · hábitos</div>
+          <div class="when">Panel de cobros · julio 2026</div>
+        </div>
+        <span class="livepill"><span class="dot2"></span>datos ilustrativos</span>
+      </div>
+
+      <div class="kpis4">
+        <div class="kpi"><div class="k">Ingreso recurrente (MRR)</div><div class="v">$4.316</div><div class="d">+12% vs. mes anterior</div></div>
+        <div class="kpi"><div class="k">Suscriptores premium</div><div class="v">864</div><div class="d">+41 este mes</div></div>
+        <div class="kpi"><div class="k">Éxito primer intento</div><div class="v">89%</div><div class="d">Banesco 94% · BDV 81%</div></div>
+        <div class="kpi"><div class="k">Recuperado por dunning</div><div class="v">$312</div><div class="d">63 morosos recuperados</div></div>
+      </div>
+
+      <div class="dashtable">
+        <table>
+          <thead><tr>
+            <th>Cliente</th><th>Banco</th><th>Plan</th>
+            <th class="num">USD</th><th class="num">Bs</th><th>Estado</th><th>Cuándo</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>María G.</td><td>Banesco</td><td class="mono">Mensual</td><td class="num">$4,99</td><td class="num">Bs. 623,75</td><td><span class="dpill ok">Conciliado</span></td><td class="mono" style="color:var(--muted)">hace 3 min</td></tr>
+            <tr><td>José P.</td><td>Mercantil</td><td class="mono">Anual</td><td class="num">$49,90</td><td class="num">Bs. 6.237,50</td><td><span class="dpill ok">Conciliado</span></td><td class="mono" style="color:var(--muted)">hace 11 min</td></tr>
+            <tr><td>Luis M.</td><td>Bancamiga</td><td class="mono">Anual</td><td class="num">$49,90</td><td class="num">Bs. 6.237,50</td><td><span class="dpill ok">Conciliado</span></td><td class="mono" style="color:var(--muted)">hace 38 min</td></tr>
+            <tr><td>Carla V.</td><td>BNC</td><td class="mono">Mensual</td><td class="num">$4,99</td><td class="num">Bs. 623,75</td><td><span class="dpill rev">En revisión</span></td><td class="mono" style="color:var(--muted)">hace 52 min</td></tr>
+            <tr><td>Diego S.</td><td>Provincial</td><td class="mono">Mensual</td><td class="num">$4,99</td><td class="num">Bs. 623,75</td><td><span class="dpill ok">Conciliado</span></td><td class="mono" style="color:var(--muted)">hace 1 h</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="dashfoot">Multi-banco · bolívares y dólares · conciliado automático contra cada suscripción</p>
+    </div>
+  </div>
+</section>
+
+<section id="developers">
+  <div class="wrap devstrip">
+    <div>
+      <p class="eyebrow">Para desarrolladores</p>
+      <h2>Integra en una tarde</h2>
+      <p class="sectionlead" style="margin-bottom:0">Pides un cobro, escuchas un webhook. Cómo se cumple por debajo — un toque hoy, débito automático mañana — no cambia tu código.</p>
+      <ul class="devlist">
+        <li><span class="ok">✓</span>Idempotencia en todo: nunca un cobro duplicado</li>
+        <li><span class="ok">✓</span>Webhooks firmados (HMAC) con reintentos automáticos</li>
+        <li><span class="ok">✓</span>Sandbox para probar sin dinero real</li>
+        <li><span class="ok">✓</span>Errores tipados: sin fondos ≠ timeout ≠ banco caído</li>
+      </ul>
+    </div>
+    <div class="code" aria-label="Ejemplo de integración">
+      <div class="ch">POST /v1/charges → webhook charge.succeeded</div>
+      <pre><span class="tk">const</span> charge = <span class="tk">await</span> kotto.charges.<span class="tm">create</span>({
+  <span class="tk">subscription_id</span>: <span class="ts">"sub_premium_8912"</span>,
+  <span class="tk">amount_usd</span>: <span class="ts">"4.99"</span>
+});
+<span class="tc">// tu webhook, cuando concilia:</span>
+<span class="tk">if</span> (event.type === <span class="ts">"charge.succeeded"</span>) {
+  <span class="tm">activatePremium</span>(event.subscription_id);
+}</pre>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="vision">
+  <div class="wrap">
+    <p class="eyebrow">La visión</p>
+    <h2>Empezamos por una mensualidad. Terminamos siendo la tubería que nadie ve.</h2>
+    <p class="sectionlead">El modelo ya está probado en la región — Pix Automático en Brasil, Fintoc en Chile, Belvo en México. Nadie lo ha construido para un mercado push, bimonetario y sin open finance. Ese es nuestro terreno, y lo recorremos en tres actos.</p>
+    <div class="acts">
+      <div class="act">
+        <div class="when">Acto 1 · hoy</div>
+        <div>
+          <h3>El cobro recurrente, resuelto</h3>
+          <p>Empezamos con startups y productos digitales — donde el dolor de cobrar la mensualidad es más agudo — y con las membresías que cargan volumen. Mandato, reintentos inteligentes y conciliación automática sobre los rieles legales que ya existen.</p>
+        </div>
+      </div>
+      <div class="act">
+        <div class="when">Acto 2</div>
+        <div>
+          <h3>Todo pago conciliado, C2B y B2B</h3>
+          <p>La misma capa cobra pagos individuales, elimina la confrontación manual de las empresas y abre el dashboard multi-banco y bimoneda. Sobre millones de eventos de repago nace el activo que ningún banco tiene solo: el historial de pago cruzado.</p>
+        </div>
+      </div>
+      <div class="act">
+        <div class="when">Acto 3</div>
+        <div>
+          <h3>La capa invisible sobre Pago Móvil</h3>
+          <p>Autoriza una vez, paga en cualquier comercio de la red. El Pago Móvil no desaparece: se vuelve la tubería que corre por debajo — como nadie piensa en el ACH cuando usa Venmo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="northstar">
+      <div class="cap">Norte</div>
+      <p>Darle a Venezuela una infraestructura de cobros <b>nueva, rápida y distinta</b> — sin pelear contra los rieles, construyendo la capa que les faltaba encima.</p>
+    </div>
+  </div>
+</section>
+
+<section id="aliados">
+  <div class="wrap">
+    <p class="eyebrow">Posicionamiento</p>
+    <h2>Aliados de infraestructura, no enemigos</h2>
+    <p class="sectionlead">kotto no compite con tu producto ni con los bancos. Hacemos la parte aburrida y difícil del cobro para que cada quien haga lo suyo.</p>
+    <div class="allies">
+      <div class="ally">
+        <h3>Aliado del founder</h3>
+        <p>Tú construyes el producto interesante; nosotros te devolvemos las semanas de ingeniería que ibas a gastar en conciliación. No queremos a tus clientes: queremos ser tu tubería invisible.</p>
+      </div>
+      <div class="ally">
+        <h3>Aliado del banco</h3>
+        <p>No somos una riel nueva que desintermedia a nadie. Nos sentamos sobre el C2P del banco aliado y le llevamos volumen transaccional que hoy se pierde en la fricción.</p>
+      </div>
+    </div>
+    <p class="pricingline">Y el pricing lo demuestra: <b>solo ganamos cuando tú cobras.</b> Comisión por transacción conciliada, base cero.</p>
+  </div>
+</section>
+
+<section class="alt" id="contacto">
+  <div class="wrap">
+    <div class="final">
+      <h2>Buscamos a los primeros que cobren con kotto — y a quienes quieran construirlo con nosotros</h2>
+      <p>Estamos cerrando un grupo pequeño de design partners: startups con producto digital y negocios de membresía que quieran dejar de perseguir mensualidades. En paralelo, levantamos capital semilla para asegurar la alianza bancaria y construir el motor de cobro. Si te interesa cualquiera de las dos cosas, hablemos.</p>
+      <div class="cta">
+        <a class="btn primary" target="_blank" rel="noopener" href="https://mail.google.com/mail/?view=cm&fs=1&to=sergioperezcjob@gmail.com&su=Quiero%20ser%20design%20partner">Sé design partner</a>
+        <a class="btn dark" style="border:1px solid rgba(255,255,255,.35)" target="_blank" rel="noopener" href="https://mail.google.com/mail/?view=cm&fs=1&to=sergioperezcjob@gmail.com&su=Interesado%20en%20invertir%20en%20kotto">Quiero invertir</a>
+      </div>
+      <div class="cta" style="margin-top:6px">
+        <button class="btn ghost" style="color:var(--brand)" onclick="openDemo()">Probar la demo en vivo →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fbrand">
+      <svg width="30" height="20" viewBox="0 0 92 40" fill="none" aria-hidden="true">
+        <path d="M0 20 H26 L33 20 L40 8 L48 33 L56 14 L62 20 H92" stroke="#A7C7E7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      kotto
+    </div>
+    <span>El pulso de tus cobros en Venezuela.</span>
+    <span class="badge">concepto en etapa de diseño · nada en esta página mueve dinero real</span>
+  </div>
+</footer>
+
+<!-- ============ DEMO INTERACTIVA (modal) ============ -->
+<div class="dmodal" id="dmodal" role="dialog" aria-modal="true" aria-label="Demo interactiva de pago con kotto">
+  <div class="backdrop" onclick="closeDemo()"></div>
+  <div class="dstage">
+    <div class="dphone"><div class="dscreen">
+      <div class="dappbar"><span class="app">Órbita · hábitos</span><span class="powered">vía kotto</span></div>
+      <div class="dscr" id="dscr"><!-- JS pinta aquí --></div>
+    </div></div>
+    <span class="dcap">demo · sin dinero real · así se siente pagar con kotto</span>
+    <button class="dclose" onclick="closeDemo()">Cerrar ✕</button>
+  </div>
+</div>
+
+<script>
+  /* ============ demo interactiva ============ */
+  var RATE = 125.00;
+  var PLANS = {
+    mensual: { label:"Órbita Premium", cadence:"/mes", usd:4.99 },
+    anual:   { label:"Órbita Premium anual", cadence:"/año", usd:49.90, monthlyEquiv:4.16, saveUsd:9.98, savePct:17 }
+  };
+  var currentPlan = 'mensual';
+  var reduceD = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var banks = {"0134":"Banesco","0105":"Mercantil","0102":"Banco de Venezuela",
+               "0108":"Provincial","0172":"Bancamiga","0191":"BNC"};
+  var autopay = false, lastFocus = null;
+
+  function fmtUSD(n){return "$"+n.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function fmtBs(n){return "Bs. "+n.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function dref(){var s="",c="ABCDEFGHJKMNPQRSTUVWXYZ0123456789";for(var i=0;i<4;i++)s+=c[Math.floor(Math.random()*c.length)];return "KTO-"+s+"-"+Math.floor(1000+Math.random()*9000);}
+
+  function openDemo(){
+    lastFocus = document.activeElement;
+    document.getElementById('dmodal').classList.add('on');
+    document.body.style.overflow='hidden';
+    dCheckout();
+    var c=document.querySelector('.dclose'); if(c) c.focus();
+  }
+  function closeDemo(){
+    document.getElementById('dmodal').classList.remove('on');
+    document.body.style.overflow='';
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape') closeDemo();
+  });
+
+  var dscrEl = null;
+  function dscr(){ return dscrEl || (dscrEl=document.getElementById('dscr')); }
+
+  function dSelectPlan(p){ currentPlan = p; dCheckout(); }
+
+  function dCheckout(){
+    var p = PLANS[currentPlan];
+    var opts=Object.keys(banks).map(function(c){return '<option value="'+c+'">'+banks[c]+'</option>';}).join('');
+    var subline = currentPlan==='anual'
+      ? '<div class="dbs" style="color:var(--jade);font-weight:700">equivale a '+fmtUSD(p.monthlyEquiv)+'/mes · ahorras '+fmtUSD(p.saveUsd)+' al año</div>'
+      : '';
+    dscr().innerHTML =
+      '<h3>'+p.label+'</h3><p class="sub">Elige tu ciclo de cobro</p>'+
+      '<div class="plantoggle" role="group" aria-label="Ciclo de facturación">'+
+        '<button class="planopt" aria-pressed="'+(currentPlan==='mensual')+'" onclick="dSelectPlan(\'mensual\')">Mensual</button>'+
+        '<button class="planopt" aria-pressed="'+(currentPlan==='anual')+'" onclick="dSelectPlan(\'anual\')">Anual <span class="save">ahorra '+PLANS.anual.savePct+'%</span></button>'+
+      '</div>'+
+      '<div class="damount"><span>'+fmtUSD(p.usd)+'</span> '+p.cadence+'</div>'+
+      '<div class="dbs">≈ '+fmtBs(p.usd*RATE)+'</div>'+
+      subline+
+      '<div class="drate">tasa BCV demo · ves dólares, se liquida en bolívares</div>'+
+      '<label class="fld" for="dbank">Tu banco</label><select id="dbank">'+opts+'</select>'+
+      '<label class="fld" for="dphone2">Teléfono</label><input class="txt" id="dphone2" value="0414 555 0198" inputmode="tel">'+
+      '<button class="dbtn primary" onclick="dGenKey()">Continuar</button>'+
+      '<p class="dhint">kotto no guarda tu clave. Es de un solo uso.</p>';
+  }
+  function dGenKey(){
+    var p = PLANS[currentPlan];
+    var bank=banks[document.getElementById('dbank').value];
+    dscr().innerHTML =
+      '<h3>Confirma tu pago</h3><p class="sub">'+fmtUSD(p.usd)+' '+p.cadence+' · '+bank+'</p>'+
+      '<div class="drate" style="margin-bottom:10px">En tu banco generas una clave C2P (app o SMS). Aquí va pre-cargada para la demo.</div>'+
+      '<label class="fld" for="dkey">Clave de pago C2P</label>'+
+      '<input class="txt" id="dkey" value="482913" maxlength="6" inputmode="numeric">'+
+      '<button class="dbtn primary" onclick="dProcess(\''+bank+'\')">Confirmar pago</button>'+
+      '<button class="dbtn ghostb" onclick="dCheckout()">Volver</button>'+
+      '<p class="dhint">Este es el único toque. Con débito automático, los próximos ciclos son cero.</p>';
+  }
+  function dProcess(bank){
+    dscr().innerHTML='<div class="dcenter"><div class="dspin"></div><div style="color:var(--muted);font-size:13px">Procesando con '+bank+'…</div></div>';
+    setTimeout(function(){ dSuccess(bank); }, reduceD?300:1600);
+  }
+  function dSuccess(bank){
+    var p = PLANS[currentPlan];
+    var r=dref(), t=new Date();
+    var hh=('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2);
+    dscr().innerHTML =
+      '<div class="dcenter">'+
+      '<div class="dtick"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#12876A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>'+
+      '<div><div class="dok">Pago conciliado</div><div style="color:var(--muted);font-size:13px">Tu premium está activo</div></div>'+
+      '<div class="dreceipt">Plan&nbsp; <b>'+p.label+' ('+(currentPlan==='anual'?'anual':'mensual')+')</b><br>Monto&nbsp; <b>'+fmtUSD(p.usd)+'</b>  ('+fmtBs(p.usd*RATE)+')<br>Banco&nbsp; <b>'+bank+'</b><br>Referencia&nbsp; <b>'+r+'</b><br>Hora&nbsp; <b>'+hh+'</b></div>'+
+      '<div class="dnotify">✓ Webhook entregado · premium desbloqueado</div>'+
+      '<button class="dbtn ghostb" onclick="dCheckout()">Hacer otro pago</button>'+
+      '</div>';
+    beat();
+  }
+
+  // Latido ambiental: el pulso de la marca recorre la banda del hero,
+  // y el recibo del mini-teléfono "late" a la vez.
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var x = 40;
+  function beat(){
+    if(reduce) return;
+    var w = document.getElementById('heroekg');
+    if(!w) return;
+    x += 64; if(x > 540) x = 60;
+    w.setAttribute('d','M0 30 H'+(x-20)+' L'+(x-11)+' 30 L'+(x-3)+' 10 L'+(x+7)+' 50 L'+(x+16)+' 30 H600');
+    w.animate([{opacity:.35},{opacity:1}],{duration:520});
+    var ok = document.getElementById('miniok');
+    if(ok) ok.animate([{transform:'scale(1)'},{transform:'scale(1.03)'},{transform:'scale(1)'}],{duration:420,easing:'ease-out'});
+    var lg = document.getElementById('logo');
+    if(lg) lg.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:420,easing:'ease-out'});
+  }
+  if(!reduce) setInterval(beat, 2400);
+</script>
+</body>
+</html>
