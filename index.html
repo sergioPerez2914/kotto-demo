@@ -41,6 +41,7 @@
   .btn.dark:hover{transform:translateY(-1px)}
   .btn.dark{background:var(--ink);color:#fff}
   .btn.ghost{background:none;color:var(--brand-deep);padding:13px 10px}
+  .btn.ghost:hover{color:var(--ink)}
   .btn:focus-visible,a:focus-visible{outline:2px solid var(--brand-deep);outline-offset:2px}
 
   /* ---------- nav ---------- */
@@ -133,7 +134,9 @@
     font-weight:700;font-size:14.5px;padding:12px;margin-top:14px;font-family:var(--display)}
   .dbtn.primary{background:var(--brand);color:var(--ink)}
   .dbtn.primary:hover{filter:brightness(1.04)}
-  .dbtn.ghostb{background:none;color:var(--brand-deep);margin-top:12px;padding:8px}
+  .dbtn.ghostb{background:none;color:var(--brand-deep);margin-top:12px;padding:8px;
+    transition:color .15s ease}
+  .dbtn.ghostb:hover{color:var(--ink)}
   .dhint{font-size:11.5px;color:var(--muted);text-align:center;margin:12px 2px 0;line-height:1.4}
   .plantoggle{display:flex;background:var(--paper);border:1px solid var(--line);border-radius:11px;
     padding:3px;gap:3px;margin-bottom:10px}
@@ -198,7 +201,9 @@
   .livepill .dot2{width:6px;height:6px;border-radius:50%;background:var(--jade);animation:blink 1.6s ease infinite}
   .kpis4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
   @media(max-width:760px){.kpis4{grid-template-columns:repeat(2,1fr)}}
-  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 17px}
+  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 17px;
+    transition:border-color .2s ease, background .2s ease, box-shadow .2s ease}
+  .kpi:hover{border-color:var(--brand-deep);background:#fff;box-shadow:var(--shadow-sm)}
   .kpi .k{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
   .kpi .v{font-family:var(--mono);font-weight:700;font-size:23px;letter-spacing:-.02em;margin-top:7px}
   .kpi .d{font-size:11px;color:var(--jade);font-weight:700;margin-top:4px}
@@ -207,6 +212,8 @@
   .dashtable th,.dashtable td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--line);white-space:nowrap}
   .dashtable th{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
     font-weight:600;background:var(--paper)}
+  .dashtable tbody tr{transition:background .15s ease}
+  .dashtable tbody tr:hover{background:var(--brand-ghost)}
   .dashtable tr:last-child td{border-bottom:0}
   .dashtable td.mono,.dashtable .num{font-family:var(--mono)}
   .dashtable .num{text-align:right}
@@ -225,7 +232,8 @@
   .pushpull{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   @media(max-width:760px){.pushpull{grid-template-columns:1fr}}
   .pp{border:1px solid var(--line);border-radius:16px;padding:24px;background:var(--card);
-    box-shadow:var(--shadow-sm)}
+    box-shadow:var(--shadow-sm);transition:transform .2s ease, box-shadow .2s ease}
+  .pp:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
   .pp.hurt{background:var(--brand-ghost)}
   .pp h3{margin:0 0 8px;font-size:16px}
   .pp p{margin:0;font-size:14px;color:var(--muted)}
@@ -301,7 +309,8 @@
   .allies{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   @media(max-width:760px){.allies{grid-template-columns:1fr}}
   .ally{border:1px solid var(--line);border-radius:16px;padding:24px;background:var(--card);
-    box-shadow:var(--shadow-sm)}
+    box-shadow:var(--shadow-sm);transition:transform .2s ease, box-shadow .2s ease}
+  .ally:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
   .ally h3{margin:0 0 8px;font-size:15.5px}
   .ally p{margin:0;font-size:13.5px;color:var(--muted)}
   .pricingline{margin-top:20px;text-align:center;font-size:15px}
