@@ -73,7 +73,7 @@
 
   /* hero visual: teléfono minimal + latido */
   .heroviz{position:relative;display:flex;justify-content:center}
-  .miniphone{width:270px;background:var(--ink);border-radius:34px;padding:10px;
+  .miniphone{width:min(270px,80vw);background:var(--ink);border-radius:34px;padding:10px;
     box-shadow:0 30px 60px -28px rgba(27,36,48,.5)}
   .miniscreen{background:var(--card);border-radius:25px;padding:20px 18px;min-height:340px;
     display:flex;flex-direction:column;gap:12px}
@@ -166,7 +166,6 @@
   /* ---------- tu empresa: antes / después ---------- */
   .bawrap{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--card)}
   .bahead{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:0}
-  @media(max-width:700px){.bahead{grid-template-columns:1.3fr 1fr 1fr}}
   .bahead > div{padding:16px 18px;font-family:var(--mono);font-size:10.5px;font-weight:600;
     text-transform:uppercase;letter-spacing:.07em}
   .bahead .lbl{color:var(--muted)}
@@ -323,6 +322,26 @@
   footer{padding:34px 0 44px;color:var(--muted);font-size:12.5px}
   footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
   footer .fbrand{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--ink)}
+  /* ---------- ajustes de espacio en móvil ---------- */
+  @media(max-width:640px){
+    .wrap{padding:0 18px}
+    header{padding:60px 0 34px}
+    section{padding:54px 0}
+    section[id]{scroll-margin-top:72px}
+    .sectionlead{margin-bottom:26px}
+    .hero{gap:34px}
+    .hero p.sub{font-size:16px;margin-bottom:24px}
+    .heroviz{margin-top:6px}
+    .northstar{padding:22px 20px}
+    .northstar p{font-size:15.5px}
+    .flipnote{padding:18px 20px}
+    .dashwrap{padding:20px 16px 6px}
+    .final{padding:42px 22px;border-radius:20px}
+  }
+  @media(max-width:400px){
+    .wrap{padding:0 15px}
+    .tryhint{font-size:12px;padding:8px 13px;white-space:normal;text-align:center;max-width:82vw}
+  }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
