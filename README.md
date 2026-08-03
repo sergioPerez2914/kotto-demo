@@ -27,7 +27,7 @@ git branch -M main
 Crea un repo vacío en GitHub (sin README ni .gitignore, para que no choque) y conéctalo:
 
 ```bash
-git remote add origin https://github.com/TU_USUARIO/kotto-site.git
+git remote add origin https://github.com/sergioPerez2914/kotto-demo.git
 git push -u origin main
 ```
 
