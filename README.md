@@ -3,7 +3,8 @@
 Landing page de **kotto**, infraestructura de cobro recurrente para Venezuela. La demo interactiva (pagador, mensual/anual, conciliación) vive embebida como modal dentro de la misma página — se abre tocando el teléfono del hero.
 
 ```
-index.html   → landing completa, con la demo integrada
+index.html      → landing completa, con la demo integrada
+evolucion.html  → muestra del Acto 2: pago único (tienda de ropa) y B2B conciliado (boutique → mayorista)
 ```
 
 Un solo archivo estático, sin dependencias ni build. Se abre directo en el navegador.

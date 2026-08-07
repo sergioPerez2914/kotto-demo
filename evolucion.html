@@ -1,0 +1,600 @@
+<!-- kotto — evolución (Acto 2): pago único C2B y B2B conciliado, sector moda. Concepto; sin dinero real. -->
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kotto — más allá de la mensualidad: pago único y B2B</title>
+<meta name="description" content="Cómo evoluciona kotto del cobro recurrente al pago único conciliado (retail) y al B2B con conciliación automática de facturas. Demo del sector moda.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B2430; --ink-2:#243040; --paper:#F4F7FB; --card:#FFFFFF;
+    --brand:#A7C7E7; --brand-deep:#5B8BBF; --brand-soft:#E3EEF9; --brand-ghost:#EDF3FA;
+    --jade:#12876A; --jade-soft:#DCEFE8;
+    --muted:#66707E; --line:#DFE6EF; --line-dark:#33405480;
+    --display:"Space Grotesk","Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --font:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+    --shadow-sm:0 1px 2px rgba(22,30,41,.04), 0 8px 24px -16px rgba(22,30,41,.14);
+    --shadow-md:0 2px 4px rgba(22,30,41,.05), 0 18px 38px -20px rgba(22,30,41,.2);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  section[id]{scroll-margin-top:84px}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);
+    line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+  a{color:var(--brand-deep)}
+  h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.03em;line-height:1.1}
+  .mono,.num,.kpi .v,.damount,.dbs,.eyebrow{font-variant-numeric:tabular-nums}
+  .eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--brand-deep);margin:0 0 14px}
+  .btn{display:inline-block;border:0;border-radius:12px;cursor:pointer;text-decoration:none;
+    font-family:var(--display);font-weight:700;font-size:15px;padding:13px 22px;
+    transition:transform .18s ease, box-shadow .18s ease, filter .18s ease}
+  .btn.primary{background:var(--brand);color:var(--ink);box-shadow:0 10px 22px -12px rgba(91,139,191,.75)}
+  .btn.primary:hover{filter:brightness(1.04);transform:translateY(-1px)}
+  .btn.dark{background:var(--ink);color:#fff}
+  .btn.dark:hover{transform:translateY(-1px)}
+  .btn.ghost{background:none;color:var(--brand-deep);padding:13px 10px}
+  .btn.ghost:hover{color:var(--ink)}
+  .btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--brand-deep);outline-offset:2px}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(245,248,252,.82);
+    backdrop-filter:blur(14px) saturate(1.6);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:13px;padding-bottom:13px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+  .brand .name{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:-.03em}
+  .navlinks{display:flex;gap:22px;align-items:center}
+  .navlinks a{font-size:13.5px;font-weight:600;text-decoration:none;color:var(--muted);transition:color .15s ease}
+  .navlinks a:hover{color:var(--ink)}
+  .navlinks .btn{padding:9px 16px;font-size:13.5px}
+  @media(max-width:720px){.navlinks a.hidesm{display:none}}
+  .badge{font-family:var(--mono);font-size:10.5px;color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;padding:3px 9px;white-space:nowrap}
+
+  header{position:relative;padding:80px 0 40px;overflow:hidden}
+  header::before{content:"";position:absolute;top:-260px;right:-140px;width:680px;height:680px;
+    background:radial-gradient(circle,rgba(167,199,231,.45) 0%,rgba(167,199,231,0) 68%);
+    pointer-events:none;z-index:0}
+  header .wrap{position:relative;z-index:1}
+  header h1{font-size:clamp(32px,4.8vw,50px);margin:0 0 18px;max-width:22ch}
+  header h1 em{font-style:normal;color:var(--brand-deep)}
+  header p.sub{font-size:17px;color:var(--muted);max-width:58ch;margin:0 0 26px;line-height:1.55}
+  .roundpill{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;
+    font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand-deep);
+    background:var(--brand-soft);border:1px solid rgba(91,139,191,.3);border-radius:999px;
+    padding:6px 13px;margin:0 0 16px}
+  .roundpill .rdot{width:6px;height:6px;border-radius:50%;background:var(--brand-deep);
+    animation:blink 1.6s ease infinite;flex:0 0 auto}
+  @keyframes blink{0%,100%{opacity:.35}50%{opacity:1}}
+  .heronote{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:14px}
+
+  /* evolución: tres actos */
+  .evo3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:34px}
+  @media(max-width:760px){.evo3{grid-template-columns:1fr}}
+  .evo{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;
+    box-shadow:var(--shadow-sm);position:relative;transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease}
+  .evo:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:var(--brand-deep)}
+  .evo .tg{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;border-radius:999px;padding:3px 10px;display:inline-block;margin-bottom:12px}
+  .evo.hoy .tg{background:var(--brand-soft);color:var(--brand-deep)}
+  .evo.demo .tg{background:var(--jade-soft);color:var(--jade)}
+  .evo h3{margin:0 0 6px;font-size:15px}
+  .evo p{margin:0;font-size:13px;color:var(--muted)}
+  .evo.demo{border-color:rgba(18,135,106,.4)}
+
+  section{padding:74px 0}
+  section.alt{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(24px,3.4vw,33px);margin:0 0 12px}
+  .sectionlead{color:var(--muted);font-size:15.5px;max-width:62ch;margin:0 0 34px;line-height:1.6}
+
+  /* ---------- teléfono interactivo (retail) ---------- */
+  .retailgrid{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+  @media(max-width:860px){.retailgrid{grid-template-columns:1fr}}
+  .rl{list-style:none;margin:18px 0 0;padding:0;font-size:14px}
+  .rl li{display:flex;gap:10px;margin-top:11px}
+  .rl .ok{color:var(--jade);font-weight:800;flex:0 0 auto}
+  .phonecol{display:flex;justify-content:center}
+  .dphone{width:min(350px,92vw);background:var(--ink);border-radius:42px;padding:12px;
+    box-shadow:0 34px 74px -30px rgba(27,36,48,.55)}
+  .dscreen{background:var(--card);border-radius:31px;overflow:hidden;min-height:540px;
+    display:flex;flex-direction:column}
+  .dappbar{padding:15px 18px 11px;border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between}
+  .dappbar .app{font-weight:800;font-size:14px}
+  .dappbar .powered{font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .dscr{padding:18px;flex:1;display:flex;flex-direction:column;overflow-y:auto}
+  .dscr h3{margin:0 0 2px;font-size:14.5px}
+  .dscr .sub{color:var(--muted);font-size:12px;margin:0 0 10px}
+  .damount{font-family:var(--mono);font-weight:700;font-size:30px;line-height:1}
+  .damount span{color:var(--brand-deep)}
+  .dbs{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:4px}
+  .drate{font-family:var(--mono);font-size:10px;color:var(--muted);margin:2px 0 4px}
+  .dscr label.fld{display:block;font-size:10.5px;font-weight:600;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.06em;margin:10px 0 5px}
+  .dscr select,.dscr input.txt{width:100%;font-family:var(--font);font-size:13.5px;
+    padding:9px 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)}
+  .dscr input.txt{font-family:var(--mono);letter-spacing:.35em}
+  .dbtn{appearance:none;border:0;border-radius:12px;cursor:pointer;width:100%;
+    font-weight:700;font-size:14.5px;padding:12px;margin-top:14px;font-family:var(--display)}
+  .dbtn.primary{background:var(--brand);color:var(--ink)}
+  .dbtn.primary:hover{filter:brightness(1.04)}
+  .dbtn.ghostb{background:none;color:var(--brand-deep);margin-top:12px;padding:8px;transition:color .15s ease}
+  .dbtn.ghostb:hover{color:var(--ink)}
+  .dhint{font-size:11.5px;color:var(--muted);text-align:center;margin:12px 2px 0;line-height:1.4}
+  .dcenter{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;gap:14px}
+  .dspin{width:44px;height:44px;border:3px solid var(--line);border-top-color:var(--brand-deep);
+    border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .dtick{width:60px;height:60px;border-radius:50%;background:var(--jade-soft);
+    display:flex;align-items:center;justify-content:center}
+  .dtick svg{width:32px;height:32px}
+  .dok{font-weight:800;font-size:18px}
+  .dreceipt{font-family:var(--mono);font-size:11.5px;color:var(--muted);background:var(--paper);
+    border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%;text-align:left;line-height:1.7}
+  .dreceipt b{color:var(--ink)}
+  .dnotify{font-size:12px;color:var(--jade);font-weight:700}
+  .dcap{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;margin-top:12px}
+
+  /* carrito retail */
+  .cartrow{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:9px 0;
+    border-bottom:1px solid var(--line);align-items:center}
+  .cartrow .nm{font-weight:600}
+  .cartrow .meta{font-size:11px;color:var(--muted)}
+  .cartrow .pr{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+  .cartrow.total{border-bottom:0;padding-top:12px}
+  .cartrow.total .nm{font-weight:800}
+  .cartrow.total .pr{font-weight:700;font-size:14px}
+  .thumb{width:38px;height:38px;border-radius:9px;background:var(--brand-ghost);flex:0 0 auto;
+    display:flex;align-items:center;justify-content:center}
+  .thumb svg{width:20px;height:20px;stroke:var(--brand-deep)}
+
+  /* ---------- B2B: dos paneles ---------- */
+  .b2bgrid{display:grid;grid-template-columns:.9fr 1.1fr;gap:22px;align-items:start}
+  @media(max-width:920px){.b2bgrid{grid-template-columns:1fr}}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;
+    box-shadow:0 24px 60px -34px rgba(27,36,48,.28)}
+  .panelhead{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;
+    justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .panelhead .who{font-weight:800;font-size:14.5px}
+  .panelhead .role{font-family:var(--mono);font-size:10px;color:var(--muted);margin-top:2px}
+  .livepill{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--jade);
+    background:var(--jade-soft);border-radius:999px;padding:4px 10px;display:flex;align-items:center;gap:6px}
+  .livepill .dot2{width:6px;height:6px;border-radius:50%;background:var(--jade);animation:blink 1.6s ease infinite}
+  .panelbody{padding:18px 20px}
+
+  .invoice{border:1px solid var(--line);border-radius:14px;padding:16px;background:var(--paper)}
+  .invoice .fno{font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .invoice .fam{font-family:var(--mono);font-weight:700;font-size:26px;margin-top:6px}
+  .invoice .fam span{color:var(--brand-deep)}
+  .invoice .fbs{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:3px}
+  .invmeta{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)}
+  .invmeta b{color:var(--ink)}
+  .due{font-family:var(--mono);font-size:10.5px;font-weight:700;color:#A05A16;
+    background:#F8ECDD;border-radius:999px;padding:3px 9px;display:inline-block;margin-top:10px}
+
+  .kpis3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+  @media(max-width:560px){.kpis3{grid-template-columns:1fr}}
+  .kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 15px;
+    transition:border-color .2s ease, background .2s ease}
+  .kpi:hover{border-color:var(--brand-deep);background:#fff}
+  .kpi .k{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+  .kpi .v{font-family:var(--mono);font-weight:700;font-size:20px;letter-spacing:-.02em;margin-top:6px;
+    transition:color .3s ease}
+  .kpi .v.bump{color:var(--jade)}
+  .dashtable{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+  .dashtable table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:520px}
+  .dashtable th,.dashtable td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+  .dashtable th{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);
+    font-weight:600;background:var(--paper)}
+  .dashtable tbody tr{transition:background .4s ease}
+  .dashtable tbody tr:hover{background:var(--brand-ghost)}
+  .dashtable tr:last-child td{border-bottom:0}
+  .dashtable td.mono{font-family:var(--mono)}
+  .dashtable .num{font-family:var(--mono);text-align:right}
+  .dpill{font-family:var(--mono);font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;display:inline-block}
+  .dpill.ok{background:var(--jade-soft);color:var(--jade)}
+  .dpill.due{background:#F8ECDD;color:#A05A16}
+  tr.flash{background:var(--jade-soft)!important}
+  .panelfoot{color:var(--muted);font-size:11px;text-align:center;font-family:var(--mono);padding:12px 0 4px}
+
+  .b2bnote{margin-top:22px;background:var(--ink);color:#fff;border-radius:16px;padding:20px 24px;
+    display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+  .b2bnote .fl{font-family:var(--mono);font-size:10.5px;color:var(--brand);font-weight:500;
+    letter-spacing:.09em;text-transform:uppercase;flex:0 0 auto}
+  .b2bnote p{margin:0;font-size:14px;color:#D8DFE9;max-width:66ch}
+  .b2bnote b{color:#fff}
+
+  /* ---------- API ---------- */
+  .apigrid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media(max-width:860px){.apigrid{grid-template-columns:1fr}}
+  .code{background:var(--ink);border-radius:16px;overflow:hidden;box-shadow:var(--shadow-md)}
+  .code .ch{padding:10px 16px;border-bottom:1px solid var(--line-dark);
+    font-family:var(--mono);font-size:11px;color:#A8B2C1}
+  pre{margin:0;padding:16px 18px;overflow-x:auto;font-family:var(--mono);font-size:12px;
+    line-height:1.75;color:#DDE5EF}
+  .tk{color:var(--brand)} .ts{color:#9ED0A6} .tc{color:#7C8899} .tm{color:#E7C988}
+  .apinote{margin-top:20px;text-align:center;font-size:15px}
+  .apinote b{color:var(--brand-deep)}
+
+  footer{padding:34px 0 44px;color:var(--muted);font-size:12.5px}
+  footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:center}
+  footer .fbrand{display:flex;align-items:center;gap:8px;font-weight:800;color:var(--ink)}
+
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease, transform .55s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:640px){
+    .wrap{padding:0 18px}
+    header{padding:56px 0 32px}
+    section{padding:52px 0}
+    section[id]{scroll-margin-top:72px}
+    .sectionlead{margin-bottom:24px}
+    .panelbody{padding:15px 14px}
+    .b2bnote{padding:18px 20px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="kotto, volver a la landing">
+      <svg width="40" height="26" viewBox="0 0 92 40" fill="none" aria-hidden="true">
+        <path d="M0 20 H26 L33 20 L40 8 L48 33 L56 14 L62 20 H92" stroke="#A7C7E7" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="name">kotto</span>
+    </a>
+    <div class="navlinks">
+      <a class="hidesm" href="#retail">Pago único</a>
+      <a class="hidesm" href="#b2b">B2B</a>
+      <a class="hidesm" href="#api">La API</a>
+      <a class="btn primary" href="index.html">← Volver a la landing</a>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap">
+    <span class="roundpill"><span class="rdot"></span>Acto 2 · muestra de evolución</span>
+    <h1>La misma tubería, <em>más allá</em> de la mensualidad</h1>
+    <p class="sub">kotto empieza cobrando suscripciones. Pero el motor de abajo — cobro de un toque, conciliación automática, dólares que liquidan en bolívares — sirve para <b>cualquier pago con una referencia que cruzar</b>. Esta página lo muestra con un sector concreto: la moda. Una tienda que vende una franela, y una boutique que le paga la factura a su mayorista.</p>
+    <p class="heronote">concepto en etapa de diseño · demos sin dinero real · datos ilustrativos</p>
+
+    <div class="evo3">
+      <div class="evo hoy">
+        <span class="tg">Hoy · Acto 1</span>
+        <h3>Cobro recurrente</h3>
+        <p>Suscripciones y membresías. El cobro se concilia contra la <b>suscripción</b>. Es la demo de la landing principal.</p>
+      </div>
+      <div class="evo demo">
+        <span class="tg">Esta página · demo 1</span>
+        <h3>Pago único C2B</h3>
+        <p>El checkout de una tienda de ropa. El mismo toque con clave C2P, pero el cobro se concilia contra el <b>pedido</b>.</p>
+      </div>
+      <div class="evo demo">
+        <span class="tg">Esta página · demo 2</span>
+        <h3>B2B conciliado</h3>
+        <p>Una boutique paga a su mayorista. El pago se concilia contra la <b>factura</b> — y las cuentas por cobrar se actualizan solas.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="retail">
+  <div class="wrap retailgrid">
+    <div>
+      <p class="eyebrow">Demo 1 · pago único C2B</p>
+      <h2>El checkout de una tienda de ropa</h2>
+      <p class="sectionlead" style="margin-bottom:0">Ávila Wear vende franelas por Instagram. Hoy cobra por Pago Móvil y revisa capturas a mano antes de despachar. Con kotto, el cliente paga con un toque y el pedido se despacha solo cuando el webhook confirma — sin capturas, sin esperar a que "llegue".</p>
+      <ul class="rl">
+        <li><span class="ok">✓</span>Sin mandato ni recurrencia: un cobro, una conciliación</li>
+        <li><span class="ok">✓</span>El pedido no se despacha hasta que el pago concilia — automático</li>
+        <li><span class="ok">✓</span>Precio en dólares, el cliente paga en bolívares desde su banco</li>
+        <li><span class="ok">✓</span>La tienda deja de cruzar referencias contra su hoja de cálculo</li>
+      </ul>
+    </div>
+    <div class="phonecol">
+      <div>
+        <div class="dphone"><div class="dscreen">
+          <div class="dappbar"><span class="app">Ávila Wear</span><span class="powered">vía kotto</span></div>
+          <div class="dscr" id="rscr"><!-- JS pinta aquí --></div>
+        </div></div>
+        <div class="dcap">demo interactiva · tócala · sin dinero real</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="b2b">
+  <div class="wrap">
+    <p class="eyebrow">Demo 2 · B2B conciliado</p>
+    <h2>La boutique paga; el mayorista lo ve conciliado al instante</h2>
+    <p class="sectionlead">Textiles Táchira le vende al mayor a boutiques de todo el país. Hoy su administradora persigue transferencias por WhatsApp y las cruza contra facturas a mano. Con kotto, cada factura lleva una referencia de cobro: cuando la boutique autoriza el pago, la factura concilia sola en el panel del proveedor. <b>Autoriza el pago en el panel izquierdo y mira el derecho.</b></p>
+
+    <div class="b2bgrid">
+      <!-- pagador -->
+      <div class="panel">
+        <div class="panelhead">
+          <div>
+            <div class="who">Boutique Colibrí</div>
+            <div class="role">panel del comprador · cuentas por pagar</div>
+          </div>
+        </div>
+        <div class="panelbody" id="bscr"><!-- JS pinta aquí --></div>
+      </div>
+
+      <!-- proveedor -->
+      <div class="panel">
+        <div class="panelhead">
+          <div>
+            <div class="who">Textiles Táchira</div>
+            <div class="role">panel del proveedor · cuentas por cobrar</div>
+          </div>
+          <span class="livepill"><span class="dot2"></span>en vivo</span>
+        </div>
+        <div class="panelbody">
+          <div class="kpis3">
+            <div class="kpi"><div class="k">Por cobrar</div><div class="v" id="kpi-open">$8.420,00</div></div>
+            <div class="kpi"><div class="k">Conciliado en agosto</div><div class="v" id="kpi-done">$23.180,00</div></div>
+            <div class="kpi"><div class="k">Facturas abiertas</div><div class="v" id="kpi-count">2</div></div>
+          </div>
+          <div class="dashtable">
+            <table>
+              <thead><tr>
+                <th>Cliente</th><th>Factura</th><th>Banco</th>
+                <th class="num">USD</th><th>Estado</th><th>Cuándo</th>
+              </tr></thead>
+              <tbody>
+                <tr id="rowF2041">
+                  <td>Boutique Colibrí</td><td class="mono">F-2041</td><td>Mercantil</td>
+                  <td class="num">$1.240,00</td>
+                  <td id="stF2041"><span class="dpill due">Por cobrar</span></td>
+                  <td class="mono" id="whF2041" style="color:var(--muted)">vence en 3 días</td>
+                </tr>
+                <tr><td>Tienda Urbana CCS</td><td class="mono">F-2039</td><td>Banesco</td><td class="num">$860,00</td><td><span class="dpill ok">Conciliada</span></td><td class="mono" style="color:var(--muted)">hace 2 h</td></tr>
+                <tr><td>Vitrina Margarita</td><td class="mono">F-2033</td><td>Provincial</td><td class="num">$640,00</td><td><span class="dpill due">Por cobrar</span></td><td class="mono" style="color:var(--muted)">vence hoy</td></tr>
+                <tr><td>Modas El Hatillo</td><td class="mono">F-2036</td><td>BNC</td><td class="num">$2.150,00</td><td><span class="dpill ok">Conciliada</span></td><td class="mono" style="color:var(--muted)">ayer</td></tr>
+                <tr><td>Look Valencia</td><td class="mono">F-2030</td><td>Bancamiga</td><td class="num">$1.980,00</td><td><span class="dpill ok">Conciliada</span></td><td class="mono" style="color:var(--muted)">hace 3 días</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="panelfoot">cada pago llega con su factura ya cruzada · sin confrontación manual</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="b2bnote">
+      <span class="fl">Por qué importa</span>
+      <p>En B2B el dolor no es el toque del pago — es la <b>confrontación</b>: días de administración cruzando transferencias contra facturas. kotto convierte cada factura en una referencia cobrable, y cada pago entra ya conciliado. De ese cruce, repetido millones de veces, nace el historial de pago entre empresas que ningún banco tiene solo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="api">
+  <div class="wrap">
+    <p class="eyebrow">Para desarrolladores</p>
+    <h2>El mismo objeto, otra referencia</h2>
+    <p class="sectionlead">La API no crece en superficie: crece en contra de qué concilia. Una suscripción, un pedido o una factura — el <code style="font-family:var(--mono);font-size:.9em">charge</code> es el mismo y tu integración también.</p>
+    <div class="apigrid">
+      <div class="code" aria-label="Ejemplo de cobro único">
+        <div class="ch">pago único · concilia contra el pedido</div>
+        <pre><span class="tk">const</span> charge = <span class="tk">await</span> kotto.charges.<span class="tm">create</span>({
+  <span class="tk">order_id</span>: <span class="ts">"ord_avila_5521"</span>,
+  <span class="tk">amount_usd</span>: <span class="ts">"36.50"</span>
+});
+<span class="tc">// webhook:</span>
+<span class="tk">if</span> (event.type === <span class="ts">"charge.succeeded"</span>) {
+  <span class="tm">despacharPedido</span>(event.order_id);
+}</pre>
+      </div>
+      <div class="code" aria-label="Ejemplo de cobro B2B">
+        <div class="ch">B2B · concilia contra la factura</div>
+        <pre><span class="tk">const</span> charge = <span class="tk">await</span> kotto.charges.<span class="tm">create</span>({
+  <span class="tk">invoice_id</span>: <span class="ts">"inv_F2041"</span>,
+  <span class="tk">amount_usd</span>: <span class="ts">"1240.00"</span>
+});
+<span class="tc">// webhook:</span>
+<span class="tk">if</span> (event.type === <span class="ts">"invoice.reconciled"</span>) {
+  <span class="tm">marcarPagada</span>(event.invoice_id);
+}</pre>
+      </div>
+    </div>
+    <p class="apinote">Suscripción, pedido o factura: <b>cambia la referencia, no la tubería.</b></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fbrand">
+      <svg width="30" height="20" viewBox="0 0 92 40" fill="none" aria-hidden="true">
+        <path d="M0 20 H26 L33 20 L40 8 L48 33 L56 14 L62 20 H92" stroke="#A7C7E7" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      kotto
+    </div>
+    <span><a href="index.html">← Volver a la landing principal</a></span>
+    <span class="badge">concepto en etapa de diseño · nada en esta página mueve dinero real</span>
+  </div>
+</footer>
+
+<script>
+  var RATE = 125.00;
+  var reduceD = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var banks = {"0134":"Banesco","0105":"Mercantil","0102":"Banco de Venezuela",
+               "0108":"Provincial","0172":"Bancamiga","0191":"BNC"};
+
+  function fmtUSD(n){return "$"+n.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function fmtBs(n){return "Bs. "+n.toLocaleString('es-VE',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function dref(){var s="",c="ABCDEFGHJKMNPQRSTUVWXYZ0123456789";for(var i=0;i<4;i++)s+=c[Math.floor(Math.random()*c.length)];return "KTO-"+s+"-"+Math.floor(1000+Math.random()*9000);}
+  function bankOpts(){return Object.keys(banks).map(function(c){return '<option value="'+c+'">'+banks[c]+'</option>';}).join('');}
+  function nowHH(){var t=new Date();return ('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2);}
+
+  /* ============ demo 1: retail, pago único ============ */
+  var CART = [
+    {nm:"Franela oversize «Caracas»", meta:"talla M · algodón", usd:22.00,
+     ic:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4l-5 3 2.5 4L8 9.6V20h8V9.6l2.5 1.4L21 7l-5-3a4 4 0 01-8 0z"/></svg>'},
+    {nm:"Gorra Ávila", meta:"unitalla · azul", usd:12.00,
+     ic:'<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a8 8 0 0116 0M4 14h16M4 14c-1.5 0-2 1-2 2h20c0-1-.5-2-2-2"/></svg>'}
+  ];
+  var SHIP = 2.50;
+  function cartTotal(){return CART.reduce(function(a,i){return a+i.usd;},0)+SHIP;}
+
+  var rEl=null; function rscr(){return rEl||(rEl=document.getElementById('rscr'));}
+
+  function rCart(){
+    var rows=CART.map(function(i){
+      return '<div class="cartrow"><div style="display:flex;gap:10px;align-items:center">'+
+        '<span class="thumb">'+i.ic+'</span>'+
+        '<div><div class="nm">'+i.nm+'</div><div class="meta">'+i.meta+'</div></div></div>'+
+        '<span class="pr">'+fmtUSD(i.usd)+'</span></div>';
+    }).join('');
+    rscr().innerHTML =
+      '<h3>Tu carrito</h3><p class="sub">2 artículos · envío a Caracas</p>'+
+      rows+
+      '<div class="cartrow"><div class="nm" style="font-weight:400;color:var(--muted)">Envío</div><span class="pr">'+fmtUSD(SHIP)+'</span></div>'+
+      '<div class="cartrow total"><div class="nm">Total</div><div style="text-align:right">'+
+        '<span class="pr">'+fmtUSD(cartTotal())+'</span>'+
+        '<div class="dbs" style="margin-top:2px">≈ '+fmtBs(cartTotal()*RATE)+'</div></div></div>'+
+      '<div class="drate">tasa BCV demo · ves dólares, se liquida en bolívares</div>'+
+      '<button class="dbtn primary" onclick="rPay()">Pagar con kotto</button>'+
+      '<p class="dhint">Un solo cobro. Sin registro, sin capturas.</p>';
+  }
+  function rPay(){
+    rscr().innerHTML =
+      '<h3>Paga tu pedido</h3><p class="sub">'+fmtUSD(cartTotal())+' · Ávila Wear</p>'+
+      '<div class="damount"><span>'+fmtUSD(cartTotal())+'</span></div>'+
+      '<div class="dbs">≈ '+fmtBs(cartTotal()*RATE)+'</div>'+
+      '<div class="drate">tasa BCV demo</div>'+
+      '<label class="fld" for="rbank">Tu banco</label><select id="rbank">'+bankOpts()+'</select>'+
+      '<label class="fld" for="rphone">Teléfono</label><input class="txt" id="rphone" value="0424 555 0173" inputmode="tel">'+
+      '<button class="dbtn primary" onclick="rKey()">Continuar</button>'+
+      '<button class="dbtn ghostb" onclick="rCart()">Volver al carrito</button>'+
+      '<p class="dhint">kotto no guarda tu clave. Es de un solo uso.</p>';
+  }
+  function rKey(){
+    var bank=banks[document.getElementById('rbank').value];
+    rscr().innerHTML =
+      '<h3>Confirma tu pago</h3><p class="sub">'+fmtUSD(cartTotal())+' · '+bank+'</p>'+
+      '<div class="drate" style="margin-bottom:10px">En tu banco generas una clave C2P (app o SMS). Aquí va pre-cargada para la demo.</div>'+
+      '<label class="fld" for="rkey">Clave de pago C2P</label>'+
+      '<input class="txt" id="rkey" value="573201" maxlength="6" inputmode="numeric">'+
+      '<button class="dbtn primary" onclick="rProcess(\''+bank+'\')">Confirmar pago</button>'+
+      '<button class="dbtn ghostb" onclick="rPay()">Volver</button>'+
+      '<p class="dhint">Un toque. El pedido se despacha cuando el pago concilia.</p>';
+  }
+  function rProcess(bank){
+    rscr().innerHTML='<div class="dcenter"><div class="dspin"></div><div style="color:var(--muted);font-size:13px">Procesando con '+bank+'…</div></div>';
+    setTimeout(function(){rSuccess(bank);}, reduceD?300:1600);
+  }
+  function rSuccess(bank){
+    rscr().innerHTML =
+      '<div class="dcenter">'+
+      '<div class="dtick"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#12876A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>'+
+      '<div><div class="dok">Pago conciliado</div><div style="color:var(--muted);font-size:13px">Tu pedido va en camino</div></div>'+
+      '<div class="dreceipt">Pedido&nbsp; <b>#5521 · Ávila Wear</b><br>Monto&nbsp; <b>'+fmtUSD(cartTotal())+'</b>  ('+fmtBs(cartTotal()*RATE)+')<br>Banco&nbsp; <b>'+bank+'</b><br>Referencia&nbsp; <b>'+dref()+'</b><br>Hora&nbsp; <b>'+nowHH()+'</b></div>'+
+      '<div class="dnotify">✓ Webhook entregado · pedido despachándose</div>'+
+      '<button class="dbtn ghostb" onclick="rCart()">Hacer otra compra</button>'+
+      '</div>';
+  }
+
+  /* ============ demo 2: B2B, factura conciliada ============ */
+  var INV = { no:"F-2041", usd:1240.00, prov:"Textiles Táchira", desc:"Reposición otoño · 48 piezas", due:"10 ago" };
+  var b2bPaid = false;
+  var bEl=null; function bscr(){return bEl||(bEl=document.getElementById('bscr'));}
+
+  function bInvoice(){
+    bscr().innerHTML =
+      '<div class="invoice">'+
+        '<div class="fno">Factura '+INV.no+' · '+INV.prov+'</div>'+
+        '<div class="fam"><span>'+fmtUSD(INV.usd)+'</span></div>'+
+        '<div class="fbs">≈ '+fmtBs(INV.usd*RATE)+' · tasa BCV demo</div>'+
+        '<div class="invmeta"><span>Concepto <b>'+INV.desc+'</b></span></div>'+
+        '<span class="due">vence el '+INV.due+'</span>'+
+      '</div>'+
+      '<label class="fld" style="display:block;font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:14px 0 5px" for="bbank">Cuenta de la empresa</label>'+
+      '<select id="bbank" style="width:100%;font-family:var(--font);font-size:13.5px;padding:9px 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)"><option>Mercantil · cuenta corriente ···4519</option><option>Banesco · cuenta corriente ···0082</option></select>'+
+      '<button class="dbtn primary" onclick="bAuth()">Autorizar pago de la factura</button>'+
+      '<p class="dhint">La referencia de cobro viene incluida en la factura: el pago llega ya cruzado.</p>';
+  }
+  function bAuth(){
+    bscr().innerHTML =
+      '<h3 style="margin:0 0 2px;font-size:14.5px">Autoriza la orden de pago</h3>'+
+      '<p class="sub" style="color:var(--muted);font-size:12px;margin:0 0 10px">'+fmtUSD(INV.usd)+' · '+INV.prov+' · factura '+INV.no+'</p>'+
+      '<div class="drate" style="margin-bottom:10px">Tu banco genera un token de autorización para pagos empresariales. Aquí va pre-cargado para la demo.</div>'+
+      '<label class="fld" style="display:block;font-size:10.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 5px" for="btoken">Token de autorización</label>'+
+      '<input class="txt" id="btoken" value="907245" maxlength="6" inputmode="numeric" style="width:100%;font-family:var(--mono);font-size:13.5px;letter-spacing:.35em;padding:9px 12px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink)">'+
+      '<button class="dbtn primary" onclick="bProcess()">Confirmar pago</button>'+
+      '<button class="dbtn ghostb" onclick="bInvoice()">Volver</button>';
+  }
+  function bProcess(){
+    bscr().innerHTML='<div class="dcenter" style="min-height:220px"><div class="dspin"></div><div style="color:var(--muted);font-size:13px">Ejecutando la orden y conciliando la factura…</div></div>';
+    setTimeout(bSuccess, reduceD?300:1500);
+  }
+  function bSuccess(){
+    bscr().innerHTML =
+      '<div class="dcenter" style="min-height:220px">'+
+      '<div class="dtick"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#12876A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>'+
+      '<div><div class="dok">Factura pagada y conciliada</div><div style="color:var(--muted);font-size:13px">'+INV.prov+' ya la ve cobrada →</div></div>'+
+      '<div class="dreceipt">Factura&nbsp; <b>'+INV.no+'</b><br>Monto&nbsp; <b>'+fmtUSD(INV.usd)+'</b>  ('+fmtBs(INV.usd*RATE)+')<br>Referencia&nbsp; <b>'+dref()+'</b><br>Hora&nbsp; <b>'+nowHH()+'</b></div>'+
+      '<div class="dnotify">✓ Webhook invoice.reconciled entregado</div>'+
+      '<button class="dbtn ghostb" onclick="bReset()">Repetir la demo</button>'+
+      '</div>';
+    if(!b2bPaid){ b2bPaid=true; supplierReconcile(); }
+  }
+  function supplierReconcile(){
+    var st=document.getElementById('stF2041'), wh=document.getElementById('whF2041'),
+        row=document.getElementById('rowF2041');
+    st.innerHTML='<span class="dpill ok">Conciliada</span>';
+    wh.textContent='hace un momento';
+    row.classList.add('flash');
+    setTimeout(function(){row.classList.remove('flash');}, reduceD?0:2200);
+    setKpis(8420-INV.usd, 23180+INV.usd, 1);
+  }
+  function bReset(){
+    if(b2bPaid){
+      b2bPaid=false;
+      var st=document.getElementById('stF2041'), wh=document.getElementById('whF2041');
+      st.innerHTML='<span class="dpill due">Por cobrar</span>';
+      wh.textContent='vence en 3 días';
+      setKpis(8420, 23180, 2);
+    }
+    bInvoice();
+  }
+  function setKpis(open, done, count){
+    var o=document.getElementById('kpi-open'), d=document.getElementById('kpi-done'),
+        c=document.getElementById('kpi-count');
+    o.textContent=fmtUSD(open); d.textContent=fmtUSD(done); c.textContent=count;
+    [o,d,c].forEach(function(el){
+      el.classList.add('bump');
+      setTimeout(function(){el.classList.remove('bump');},1800);
+    });
+  }
+
+  rCart();
+  bInvoice();
+
+  /* ============ aparición al hacer scroll ============ */
+  (function(){
+    if(reduceD || !('IntersectionObserver' in window)) return;
+    var sel='.evo,.kpi,.panel,.code,.b2bnote,.rl li';
+    var els=Array.prototype.slice.call(document.querySelectorAll(sel));
+    els.forEach(function(el){el.classList.add('reveal');});
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting) return;
+        var el=en.target; io.unobserve(el);
+        var idx=Array.prototype.indexOf.call(el.parentNode.children,el);
+        setTimeout(function(){el.classList.add('in');}, Math.min(Math.max(idx,0)*70,420));
+      });
+    },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(el){io.observe(el);});
+  })();
+</script>
+</body>
+</html>
